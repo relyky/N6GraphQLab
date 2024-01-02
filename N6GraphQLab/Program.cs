@@ -1,6 +1,13 @@
+using N6GraphQLab.Models;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
+
+//## for GrqphQL
+builder.Services
+    .AddGraphQLServer()
+    .AddQueryType<BookQuery>();
 
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
@@ -21,5 +28,8 @@ app.UseHttpsRedirection();
 app.UseAuthorization();
 
 app.MapControllers();
+
+//## for GrqphQL
+app.MapGraphQL();
 
 app.Run();
