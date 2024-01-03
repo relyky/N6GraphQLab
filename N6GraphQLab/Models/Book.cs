@@ -1,26 +1,43 @@
 ﻿namespace N6GraphQLab.Models;
 
-public class Book
-{
-  public string Title { get; set; }
+public record Book(string Title, Author Author);
 
-  public Author Author { get; set; }
-}
+public record Author(string Name);
 
-public class Author
-{
-  public string Name { get; set; }
-}
-
+///<remarks>
+///§§ GraphQL 
+///query {
+///  author(name:"Brandon") {
+///    name
+///  }
+///  book(title: "Future" ) {
+///    title
+///    author {
+///      name
+///    }
+///  }
+///  bookList {
+///    title
+///    author {
+///      name
+///    }
+///  }
+///}
+///</remarks>
 public class BookQuery
 {
-  public Book GetBook() =>
-      new Book
-      {
-        Title = "C# in depth.",
-        Author = new Author
-        {
-          Name = "Jon Skeet"
-        }
-      };
+  readonly Book[] _books = new Book[]
+  {
+    new("I Love GraphQL", new Author("Brandon Minnick")),
+    new("GraphQL is the Future", new Author("Brandon Minnick")),
+    new("I Love SOAP + XML", new Author("John 'I Hate New Technology' Joe")),
+    new("C# in depth.", new Author("Jon Skeet")),
+  };
+
+  public Book[] GetBookList() => _books;
+
+  public Book? GetBook(string title) => _books.FirstOrDefault(c => c.Title.Contains(title));
+
+  public Author? GetAuthor(string name) => _books.Where(c => c.Author.Name.Contains(name))
+                                                 .FirstOrDefault()?.Author;
 }
