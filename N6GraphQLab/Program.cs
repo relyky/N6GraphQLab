@@ -7,7 +7,11 @@ var builder = WebApplication.CreateBuilder(args);
 //## for GrqphQL
 builder.Services
     .AddGraphQLServer()
-    .AddQueryType<ProductQuery>();
+    .AddQueryType(cfg => cfg.Name("Query"))
+    .AddType<ProductQuery>()
+    .AddType<BookQuery>();
+
+    //.AddQueryType<ProductQuery>();
     //.AddQueryType<BookQuery>();
 
 builder.Services.AddControllers();

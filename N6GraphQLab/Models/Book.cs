@@ -24,6 +24,7 @@ public record Author(string Name);
 ///  }
 ///}
 ///</remarks>
+[ExtendObjectType("Query")]
 public class BookQuery
 {
   readonly Book[] _books = new Book[]

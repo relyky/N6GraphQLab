@@ -2,6 +2,7 @@
 
 public record Product(int Id, string Name, int Quantity);
 
+[ExtendObjectType("Query")]
 public class ProductQuery
 {
   readonly Product[] _products = new Product[]
