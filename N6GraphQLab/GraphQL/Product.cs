@@ -1,8 +1,8 @@
-﻿namespace N6GraphQLab.Models;
+﻿namespace N6GraphQLab.GraphQL;
 
 public record Product(int Id, string Name, int Quantity);
 
-[ExtendObjectType("Query")]
+[ExtendObjectType(nameof(Query))]
 public class ProductQuery
 {
   readonly Product[] _products = new Product[]

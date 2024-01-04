@@ -1,4 +1,4 @@
-﻿namespace N6GraphQLab.Models;
+﻿namespace N6GraphQLab.GraphQL;
 
 public record Book(string Title, Author Author);
 
@@ -24,7 +24,7 @@ public record Author(string Name);
 ///  }
 ///}
 ///</remarks>
-[ExtendObjectType("Query")]
+[ExtendObjectType(nameof(Query))]
 public class BookQuery
 {
   readonly Book[] _books = new Book[]
@@ -34,8 +34,6 @@ public class BookQuery
     new("I Love SOAP + XML", new Author("John 'I Hate New Technology' Joe")),
     new("C# in depth.", new Author("Jon Skeet")),
   };
-
-  public string Hello(string name = "World") => $"Hello, {name}!";
 
   public Book[] GetBookList() => _books;
 

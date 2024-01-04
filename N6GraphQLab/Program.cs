@@ -1,4 +1,4 @@
-using N6GraphQLab.Models;
+using N6GraphQLab.GraphQL;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -7,12 +7,9 @@ var builder = WebApplication.CreateBuilder(args);
 //## for GrqphQL
 builder.Services
     .AddGraphQLServer()
-    .AddQueryType(cfg => cfg.Name("Query"))
+    .AddQueryType<Query>()
     .AddType<ProductQuery>()
     .AddType<BookQuery>();
-
-    //.AddQueryType<ProductQuery>();
-    //.AddQueryType<BookQuery>();
 
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
