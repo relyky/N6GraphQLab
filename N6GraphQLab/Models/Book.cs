@@ -34,6 +34,8 @@ public class BookQuery
     new("C# in depth.", new Author("Jon Skeet")),
   };
 
+  public string Hello(string name = "World") => $"Hello, {name}!";
+
   public Book[] GetBookList() => _books;
 
   public Book? GetBook(string title) => _books.FirstOrDefault(c => c.Title.Contains(title));
