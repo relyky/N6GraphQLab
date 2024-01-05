@@ -15,9 +15,24 @@
 
 <p>@message</p>
 
+<h6>theBook</h6>
+<pre>
+  @System.Text.Json.JsonSerializer.Serialize(theBook, jsonOptions)
+</pre>
+
 @code {
+  //## Resource
+  System.Text.Json.JsonSerializerOptions jsonOptions = new System.Text.Json.JsonSerializerOptions
+  {
+    WriteIndented = true,
+    Encoder = System.Text.Encodings.Web.JavaScriptEncoder.UnsafeRelaxedJsonEscaping
+  };
+
+  //## State
   string message = "喂";
   bool f_loading = false;
+
+  IGetBook_Book theBook = null;
 
   async Task HandleClick()
   {
@@ -34,6 +49,11 @@
 
     foreach (var item in result2.Data!.BookList)
       message += item.Title + "; ";
+
+    var result3 = await glc.GetBook.ExecuteAsync("SOAP");
+    theBook = result3.Data?.Book;
+    
+    message += " 作者之一: " + (theBook?.Author?.Name ?? "nil");
 
     f_loading = false;
   }

@@ -1,3 +1,4 @@
+
 query GetProductList {
   productList {
     id,
@@ -9,5 +10,14 @@ query GetProductList {
 query GetBookList {
   bookList {
     title
+  }
+}
+
+query GetBook($title:String!) {
+  book(title: $title) {
+    title,
+    author {
+      name
+    }
   }
 }
