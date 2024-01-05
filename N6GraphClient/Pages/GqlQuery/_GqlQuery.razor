@@ -1,0 +1,40 @@
+﻿@using N6GraphClient.GraphQL
+@page "/graphql-query"
+@inject IN6GraphQLabClient glc
+
+<PageTitle>GraphQL query lab</PageTitle>
+
+<h1>GraphQL query lab</h1>
+
+<button @onclick=HandleClick>query from N6GraphQLab</button>
+
+@if (f_loading)
+{
+  <p>loading...</p>
+}
+
+<p>@message</p>
+
+@code {
+  string message = "喂";
+  bool f_loading = false;
+
+  async Task HandleClick()
+  {
+    message = string.Empty;
+    f_loading = true;
+
+    var result = await glc.GetProductList.ExecuteAsync();
+    //result.EnsureNoErrors();
+
+    foreach (var item in result.Data!.ProductList)
+      message += item.Name + "; ";
+
+    var result2 = await glc.GetBookList.ExecuteAsync();
+
+    foreach (var item in result2.Data!.BookList)
+      message += item.Title + "; ";
+
+    f_loading = false;
+  }
+}

@@ -1,0 +1,13 @@
+query GetProductList {
+  productList {
+    id,
+    name,
+    quantity
+  }
+}
+
+query GetBookList {
+  bookList {
+    title
+  }
+}
