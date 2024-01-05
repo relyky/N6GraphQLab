@@ -1,0 +1,49 @@
+﻿@using N6GraphClient.GraphQL
+@using StrawberryShake.Extensions
+@implements IDisposable
+@inject IN6GraphQLabClient glc
+
+<div style="border:solid 2px red; padding:8px; margin-bottom:8px;">
+  <h3>MySubscriptionWidget</h3>
+
+  @if(session != null)
+  {
+    <p>listen...</p>    
+  }
+  <p>@tickMsg</p>
+
+  <button @onclick=HandleSubscribe>啟動訂閱</button>
+  <button @onclick=CancelSubscribe>取消訂閱</button>
+</div>
+
+@code {
+  IDisposable? session = null;
+  string tickMsg = "init";
+
+  void IDisposable.Dispose()
+  {
+    session?.Dispose();
+    session = null;
+  }
+
+  Task HandleSubscribe()
+  {
+    session = glc.ListenTimerTick
+            .Watch()
+            .Subscribe(async result =>
+            {
+              // do something with the result
+              tickMsg = result.Data!.OnTimerTick.Tick;
+              await InvokeAsync(StateHasChanged);
+            });
+
+    return Task.CompletedTask;
+  }
+
+  Task CancelSubscribe()
+  {
+    session?.Dispose();
+    session = null;
+    return Task.CompletedTask;
+  }
+}

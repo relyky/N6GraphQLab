@@ -11,7 +11,8 @@ builder.Services.AddSingleton<WeatherForecastService>();
 
 //## from GraphQL client
 builder.Services.AddN6GraphQLabClient()
-       .ConfigureHttpClient(cfg => cfg.BaseAddress = new Uri("https://localhost:7094/graphql/"));
+       .ConfigureHttpClient(cfg => cfg.BaseAddress = new Uri("https://localhost:7094/graphql/"))
+       .ConfigureWebSocketClient(cfg => cfg.Uri = new Uri("wss://localhost:7094/graphql/"));  // wss := WebSocket + SSL
 
 var app = builder.Build();
 

@@ -1,5 +1,6 @@
 schema {
   query: Query
+  subscription: Subscription
 }
 
 type Query {
@@ -8,6 +9,14 @@ type Query {
   bookList: [Book!]!
   book(title: String!): Book
   author(name: String!): Author
+}
+
+type Subscription {
+  onTimerTick: TimerTick!
+}
+
+type TimerTick {
+  tick: String!
 }
 
 type Author {

@@ -21,3 +21,9 @@ query GetBook($title:String!) {
     }
   }
 }
+
+subscription ListenTimerTick {
+  onTimerTick {
+    tick
+  }
+}
