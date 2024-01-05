@@ -9,7 +9,9 @@ builder.Services
     .AddGraphQLServer()
     .AddQueryType<Query>()
     .AddType<ProductQuery>()
-    .AddType<BookQuery>();
+    .AddType<BookQuery>()
+    .AddSubscriptionType<Subscription>() // for GrqphQL subscriptions.
+    .AddInMemorySubscriptions();
 
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
@@ -33,5 +35,6 @@ app.MapControllers();
 
 //## for GrqphQL
 app.MapGraphQL();
+app.UseWebSockets(); // for GrqphQL subscriptions.
 
 app.Run();
