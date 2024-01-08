@@ -3,7 +3,7 @@ namespace N6GraphQLab.Services;
 
 public record Product(int Id, string Name, int Quantity);
 
-public class ProductService
+class ProductService
 {
   //## sims data store
   static List<Product> _products = new List<Product>

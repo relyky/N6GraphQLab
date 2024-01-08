@@ -1,5 +1,6 @@
 schema {
   query: Query
+  mutation: Mutation
   subscription: Subscription
 }
 
@@ -11,12 +12,26 @@ type Query {
   author(name: String!): Author
 }
 
+type Mutation {
+  addProdcut(input: ProductInput!): ProductAddedPayload!
+}
+
 type Subscription {
   onTimerTick: TimerTick!
 }
 
 type TimerTick {
   tick: String!
+}
+
+input ProductInput {
+  name: String!
+  quantity: Int!
+}
+
+type ProductAddedPayload {
+  isSuccess: Boolean!
+  newProduct: Product!
 }
 
 type Author {

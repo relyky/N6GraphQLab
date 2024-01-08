@@ -1,0 +1,58 @@
+﻿@using N6GraphClient.GraphQL
+@page "/graphql-mutation"
+@inject IN6GraphQLabClient glc
+
+<PageTitle>GraphQL mutation lab</PageTitle>
+
+<h1>GraphQL mutation lab</h1>
+
+@if (f_loading)
+{
+  <p>Loading...</p>
+}
+
+<button @onclick=AddProduct>Add Product</button>
+@if (addProdcutPayload != null)
+{
+  <pre>
+    @System.Text.Json.JsonSerializer.Serialize(addProdcutPayload, jsonOptions)
+  </pre>
+}
+
+<button @onclick=GetProductList>Get Product List</button>
+<ul>
+  @foreach (var item in dataList)
+  {
+    <li>@($"{item.Id} | {item.Name} | {item.Quantity}")</li>
+  }
+</ul>
+
+@code {
+  //## Resource
+  System.Text.Json.JsonSerializerOptions jsonOptions = new System.Text.Json.JsonSerializerOptions
+  {
+    WriteIndented = true,
+    Encoder = System.Text.Encodings.Web.JavaScriptEncoder.UnsafeRelaxedJsonEscaping
+  };
+
+  //## State
+  bool f_loading = false;
+  List<IGetProductList_ProductList> dataList = new();
+  IAddProdcut_AddProdcut? addProdcutPayload = null;
+
+  async Task GetProductList()
+  {
+    f_loading = true;
+    var result = await glc.GetProductList.ExecuteAsync();
+    dataList = result.Data!.ProductList.ToList();
+    f_loading = false;
+  }
+
+  async Task AddProduct()
+  {
+    f_loading = true;
+    var result = await glc.AddProdcut.ExecuteAsync("大書櫃", 7);
+    addProdcutPayload = result.Data!.AddProdcut;
+    f_loading = false;
+  }
+}

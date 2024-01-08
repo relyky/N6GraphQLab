@@ -27,3 +27,14 @@ subscription ListenTimerTick {
     tick
   }
 }
+
+mutation addProdcut($title:String!, $quantity:Int!) {
+  addProdcut(input: { name:$title, quantity: $quantity }) {
+    isSuccess
+    newProduct {
+      id,
+      name,
+      quantity
+    }
+  }
+}

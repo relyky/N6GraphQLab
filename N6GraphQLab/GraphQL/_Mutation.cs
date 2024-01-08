@@ -9,9 +9,9 @@ public class Mutation
 {
   readonly ProductService _bizSvc;
 
-  public Mutation([Service] ProductService bizSvc)
+  public Mutation([Service] IServiceProvider provider)
   {
-    _bizSvc = bizSvc;
+    _bizSvc = provider.GetRequiredService<ProductService>();
   }
 
   public Task<ProductAddedPayload> AddProdcut(ProductInput input)
