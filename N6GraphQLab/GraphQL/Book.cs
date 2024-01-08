@@ -4,26 +4,6 @@ public record Book(string Title, Author Author);
 
 public record Author(string Name);
 
-///<remarks>
-///§§ GraphQL 
-///query {
-///  author(name:"Brandon") {
-///    name
-///  }
-///  book(title: "Future" ) {
-///    title
-///    author {
-///      name
-///    }
-///  }
-///  bookList {
-///    title
-///    author {
-///      name
-///    }
-///  }
-///}
-///</remarks>
 [ExtendObjectType(nameof(Query))]
 public class BookQuery
 {

@@ -1,4 +1,5 @@
 using N6GraphQLab.GraphQL;
+using N6GraphQLab.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -17,6 +18,9 @@ builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+
+//## ¦Û­qªA°È
+builder.Services.AddScoped<ProductService>();
 
 var app = builder.Build();
 
