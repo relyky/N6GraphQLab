@@ -4,4 +4,5 @@
 # 開發環境
 * 平台: .NET6
 * IDE: Visual Studio 2022
-* 框架: Blazor Server App
+* Server 框架: Blazor Swagger API
+* Client 框架: Blazor Server App
