@@ -17,7 +17,10 @@ public class Mutation
     var product = bizSvc.AddProduct(new Product(0, input.Name, input.Quantity));
     var result = new ProductAddedPayload(true, product);
 
-    await eventSender.SendAsync(nameof(AddProdcut), result); // for subscription 
+    await eventSender.SendAsync(nameof(AddProdcut), result);
+    // for subscription, 一般並不需要。 
+    // mutation 通告：通告某 client 已有異動了。
+
     return result;
   }
 }
