@@ -1,9 +1,5 @@
 ﻿namespace N6GraphQLab.GraphQL;
 
-public record Book(string Title, Author Author);
-
-public record Author(string Name);
-
 [ExtendObjectType(nameof(Query))]
 public class BookQuery
 {
@@ -22,3 +18,7 @@ public class BookQuery
   public Author? GetAuthor(string name) => _books.Where(c => c.Author.Name.Contains(name))
                                                  .FirstOrDefault()?.Author;
 }
+
+public record Book(string Title, Author Author);
+
+public record Author(string Name);

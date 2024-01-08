@@ -11,6 +11,7 @@ builder.Services
     .AddQueryType<Query>()
     .AddType<ProductQuery>()
     .AddType<BookQuery>()
+    .AddMutationType<Mutation>()
     .AddSubscriptionType<Subscription>() // for GrqphQL subscriptions.
     .AddInMemorySubscriptions();
 

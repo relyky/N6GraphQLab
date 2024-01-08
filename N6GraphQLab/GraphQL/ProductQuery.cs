@@ -3,7 +3,7 @@
 namespace N6GraphQLab.GraphQL;
 
 [ExtendObjectType(nameof(Query))]
-internal class ProductQuery
+public class ProductQuery
 {
   readonly ProductService _bizSvc;
 
