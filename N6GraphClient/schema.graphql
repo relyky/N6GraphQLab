@@ -18,6 +18,7 @@ type Mutation {
 
 type Subscription {
   onTimerTick: TimerTick!
+  onProductAdded: ProductAddedPayload!
 }
 
 type TimerTick {

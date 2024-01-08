@@ -6,6 +6,8 @@
 
 <h1>GraphQL mutation lab</h1>
 
+<MySubscriptionWidget />
+
 @if (f_loading)
 {
   <p>Loading...</p>
@@ -51,7 +53,12 @@
   async Task AddProduct()
   {
     f_loading = true;
-    var result = await glc.AddProdcut.ExecuteAsync("大書櫃", 7);
+    var input = new ProductInput()
+    {
+      Name = "超大型書櫃",
+      Quantity = 5
+    };
+    var result = await glc.AddProdcut.ExecuteAsync(input);
     addProdcutPayload = result.Data!.AddProdcut;
     f_loading = false;
   }

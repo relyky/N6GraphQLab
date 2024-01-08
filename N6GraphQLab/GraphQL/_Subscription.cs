@@ -6,6 +6,11 @@ public record TimerTick(string Tick);
 
 public class Subscription
 {
+  #region Server side streaming sample
+
+  /// <summary>
+  /// for: Server side streaming
+  /// </summary>
   public async IAsyncEnumerable<TimerTick> OnTimerTickStream([Service] ITopicEventReceiver eventReceiver)
   {
     do
@@ -22,4 +27,15 @@ public class Subscription
   [Subscribe(With = nameof(OnTimerTickStream))]
   public TimerTick OnTimerTick([EventMessage] TimerTick timerTick)
     => timerTick;
+
+  #endregion
+
+  /// <summary>
+  /// Subscribe mutation evnet sample
+  /// </summary>
+  [Subscribe]
+  [Topic(nameof(Mutation.AddProdcut))]
+  public ProductAddedPayload OnProductAdded([EventMessage] ProductAddedPayload message)
+    => message;
+
 }

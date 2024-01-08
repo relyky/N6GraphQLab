@@ -10,15 +10,29 @@
   {
     <p>listen...</p>    
   }
-  <p>@tickMsg</p>
+
+  @if (receivedMessage != null)
+  {
+  <pre>
+      @System.Text.Json.JsonSerializer.Serialize(receivedMessage, jsonOptions)
+  </pre>
+  }
 
   <button @onclick=HandleSubscribe>啟動訂閱</button>
   <button @onclick=CancelSubscribe>取消訂閱</button>
 </div>
 
 @code {
+  //## Resource
+  System.Text.Json.JsonSerializerOptions jsonOptions = new System.Text.Json.JsonSerializerOptions
+  {
+    WriteIndented = true,
+    Encoder = System.Text.Encodings.Web.JavaScriptEncoder.UnsafeRelaxedJsonEscaping
+  };
+
+  //## State
   IDisposable? session = null;
-  string tickMsg = "init";
+  IListenProductAdded_OnProductAdded? receivedMessage = null;
 
   void IDisposable.Dispose()
   {
@@ -31,12 +45,12 @@
   /// </summary>
   Task HandleSubscribe()
   {
-    session = glc.ListenTimerTick
+    session = glc.ListenProductAdded
             .Watch()
             .Subscribe(async result =>
             {
               // do something with the result
-              tickMsg = result.Data!.OnTimerTick.Tick;
+              receivedMessage = result.Data!.OnProductAdded;
               await InvokeAsync(StateHasChanged);
             });
 

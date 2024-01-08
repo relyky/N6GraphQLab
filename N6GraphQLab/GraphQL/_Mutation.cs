@@ -1,4 +1,5 @@
-﻿using N6GraphQLab.Services;
+﻿using HotChocolate.Subscriptions;
+using N6GraphQLab.Services;
 
 namespace N6GraphQLab.GraphQL;
 
@@ -7,16 +8,16 @@ public record ProductInput(string Name, int Quantity);
 
 public class Mutation
 {
-  readonly ProductService _bizSvc;
-
-  public Mutation([Service] IServiceProvider provider)
+  public async Task<ProductAddedPayload> AddProdcut(ProductInput input,
+    [Service] IServiceProvider provider,
+    [Service] ITopicEventSender eventSender)
   {
-    _bizSvc = provider.GetRequiredService<ProductService>();
-  }
+    var bizSvc = provider.GetRequiredService<ProductService>();
 
-  public Task<ProductAddedPayload> AddProdcut(ProductInput input)
-  {
-    var product = _bizSvc.AddProduct(new Product(0, input.Name, input.Quantity));
-    return Task.FromResult(new ProductAddedPayload(true, product));
+    var product = bizSvc.AddProduct(new Product(0, input.Name, input.Quantity));
+    var result = new ProductAddedPayload(true, product);
+
+    await eventSender.SendAsync(nameof(AddProdcut), result); // for subscription 
+    return result;
   }
 }
