@@ -8,7 +8,7 @@
 
   <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.Components" Version="6.0.25" />
-    <PackageReference Include="StrawberryShake.Server" Version="13.8.1" />
+    <PackageReference Include="StrawberryShake.Blazor" Version="13.8.1" />
     <PackageReference Include="StrawberryShake.Transport.WebSockets" Version="13.8.1" />
   </ItemGroup>
 

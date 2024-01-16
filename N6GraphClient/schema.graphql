@@ -7,7 +7,9 @@ schema {
 type Query {
   hello(name: String! = "World"): String!
   productList: [Product!]!
-  bookList: [Book!]!
+  bookList(where: BookFilterInput order: [BookSortInput!]): [Book!]!
+  booksPage("Returns the first _n_ elements from the list." first: Int "Returns the elements in the list that come after the specified cursor." after: String "Returns the last _n_ elements from the list." last: Int "Returns the elements in the list that come before the specified cursor." before: String): BooksPageConnection
+  bookListX(title: String! where: BookFilterInput): [Book!]!
   book(title: String!): Book
   author(name: String!): Author
 }
@@ -19,6 +21,83 @@ type Mutation {
 type Subscription {
   onTimerTick: TimerTick!
   onProductAdded: ProductAddedPayload!
+}
+
+input BookFilterInput {
+  and: [BookFilterInput!]
+  or: [BookFilterInput!]
+  title: StringOperationFilterInput
+  author: AuthorFilterInput
+}
+
+input BookSortInput {
+  title: SortEnumType
+  author: AuthorSortInput
+}
+
+"A connection to a list of items."
+type BooksPageConnection {
+  "Information to aid in pagination."
+  pageInfo: PageInfo!
+  "A list of edges."
+  edges: [BooksPageEdge!]
+  "A flattened list of the nodes."
+  nodes: [Book!]
+}
+
+input StringOperationFilterInput {
+  and: [StringOperationFilterInput!]
+  or: [StringOperationFilterInput!]
+  eq: String
+  neq: String
+  contains: String
+  ncontains: String
+  in: [String]
+  nin: [String]
+  startsWith: String
+  nstartsWith: String
+  endsWith: String
+  nendsWith: String
+}
+
+input AuthorFilterInput {
+  and: [AuthorFilterInput!]
+  or: [AuthorFilterInput!]
+  name: StringOperationFilterInput
+}
+
+enum SortEnumType {
+  ASC
+  DESC
+}
+
+input AuthorSortInput {
+  name: SortEnumType
+}
+
+"Information about pagination in a connection."
+type PageInfo {
+  "Indicates whether more edges exist following the set defined by the clients arguments."
+  hasNextPage: Boolean!
+  "Indicates whether more edges exist prior the set defined by the clients arguments."
+  hasPreviousPage: Boolean!
+  "When paginating backwards, the cursor to continue."
+  startCursor: String
+  "When paginating forwards, the cursor to continue."
+  endCursor: String
+}
+
+type Book {
+  title: String!
+  author: Author!
+}
+
+"An edge in a connection."
+type BooksPageEdge {
+  "A cursor for use in pagination."
+  cursor: String!
+  "The item at the end of the edge."
+  node: Book!
 }
 
 type TimerTick {
@@ -37,11 +116,6 @@ type ProductAddedPayload {
 
 type Author {
   name: String!
-}
-
-type Book {
-  title: String!
-  author: Author!
 }
 
 type Product {

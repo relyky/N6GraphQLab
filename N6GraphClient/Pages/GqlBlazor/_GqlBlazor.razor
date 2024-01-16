@@ -1,0 +1,112 @@
+﻿@using N6GraphClient.GraphQL.Components
+@page "/graphql-blazor"
+
+<PageTitle>GraphQL blazor lab</PageTitle>
+
+<h3>GraphQL blazor lab</h3>
+
+<div class="p-3 my-3 border border-2 border-primary rounded rounded-3">
+  <h6>Subscription - OnTimerTick</h6>
+  <div>
+    <UseListenTimerTick Context="result">
+      <ChildContent>
+        @result.OnTimerTick.Tick
+      </ChildContent>
+      <LoadingContent>
+        Loading...
+      </LoadingContent>
+    </UseListenTimerTick>
+  </div>
+</div>
+
+<div class="p-3 my-3 border border-2 border-primary rounded rounded-3">
+  <h6>Books Page</h6>
+  <div>
+    <UseGetBooksPage Context="result" Size=3 After=@after Before=@before >
+      <ChildContent>
+        @{
+          var pageInfo = result.BooksPage!.PageInfo;
+        }
+        <ul>
+          @foreach (var book in result.BooksPage!.Nodes!)
+          {
+            <li>@book.Title</li>
+          }
+        </ul>
+        <button class="btn btn-outline-primary" @onclick="()=>HandlePrevPage(pageInfo.HasPreviousPage, pageInfo.StartCursor)" disabled=@(!pageInfo.HasPreviousPage) >上一頁</button>
+        <button class="btn btn-outline-primary" @onclick="()=>HandleNextPage(pageInfo.HasNextPage, pageInfo.EndCursor)" disabled=@(!pageInfo.HasNextPage) >下一頁</button>
+      </ChildContent>
+      <LoadingContent>
+        Loading...
+      </LoadingContent>
+    </UseGetBooksPage>
+  </div>
+</div>
+
+
+
+<div class="p-3 my-3 border border-2 border-primary rounded rounded-3">
+  <h6>theBook</h6>
+  <div>
+    <UseGetBook Context="result" Title=@title>
+      <ChildContent>
+        <pre>
+          @(System.Text.Json.JsonSerializer.Serialize(result.Book, jsonOptions))
+        </pre>
+      </ChildContent>
+      <LoadingContent>
+        Loading...
+      </LoadingContent>
+    </UseGetBook>
+  </div>
+</div>
+
+<div class="p-3 my-3 border border-2 border-primary rounded rounded-3">
+  <h6>ProductList</h6>
+  <div>
+    <UseGetProductList Context="result">
+      <ChildContent>
+        <ul>
+          @foreach (var product in result.ProductList)
+          {
+            <li>@product.Id | @product.Name | @product.Quantity</li>
+          }
+        </ul>
+      </ChildContent>
+      <LoadingContent>
+        Loading...
+      </LoadingContent>
+    </UseGetProductList>
+  </div>
+</div>
+
+
+@code {
+  //## Resource
+  System.Text.Json.JsonSerializerOptions jsonOptions = new System.Text.Json.JsonSerializerOptions
+    {
+      WriteIndented = true,
+      Encoder = System.Text.Encodings.Web.JavaScriptEncoder.UnsafeRelaxedJsonEscaping
+    };
+
+  string title = "指南";
+  string? after = null;
+  string? before = null;
+
+  Task HandleNextPage(bool hasNextPage, string? cursor)
+  {
+    before = null;
+    after = cursor;
+    return Task.CompletedTask;
+  }
+
+
+  Task HandlePrevPage(bool hasPrevPage, string? cursor)
+  {
+    after = null;
+    before = cursor;
+    return Task.CompletedTask;
+  }
+
+
+}

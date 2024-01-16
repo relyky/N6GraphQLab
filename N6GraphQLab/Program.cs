@@ -13,7 +13,8 @@ builder.Services
     .AddType<BookQuery>()
     .AddMutationType<Mutation>()
     .AddSubscriptionType<Subscription>() // for GrqphQL subscriptions.
-    .AddInMemorySubscriptions()    
+    .AddInMemorySubscriptions()
+    .AddProjections() // enable projection
     .AddFiltering() // enable filter
     .AddSorting(); // enable sorting
 

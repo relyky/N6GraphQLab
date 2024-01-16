@@ -13,6 +13,25 @@ query GetBookList {
   }
 }
 
+query GetBooksPage($size:Int!, $after:String, $before:String) {
+  booksPage(
+    first: $size,
+    after: $after
+    last: $size,
+    before: $before    
+  ) {
+    pageInfo {
+      hasNextPage,
+      hasPreviousPage,
+      startCursor,
+      endCursor
+    }
+    nodes {
+      title
+    }
+  }
+}
+
 query GetBook($title:String!) {
   book(title: $title) {
     title,

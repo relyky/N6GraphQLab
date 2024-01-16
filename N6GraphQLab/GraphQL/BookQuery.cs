@@ -20,6 +20,7 @@ public class BookQuery
   /// <summary>
   /// Note: If you use more than one middleware, keep in mind that ORDER MATTERS. The correct order is UsePaging > UseProjections > UseFiltering > UseSorting
   /// </summary>
+  //[UseFirstOrDefault]
   //[UsePaging]
   //[UseProjection]
   [UseFiltering]
