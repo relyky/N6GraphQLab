@@ -34,7 +34,7 @@
   string message = "喂";
   bool f_loading = false;
 
-  IGetBook_Book theBook = null;
+  IGetBook_Book? theBook = null;
 
   async Task HandleClick()
   {
@@ -44,7 +44,7 @@
     var result = await glc.GetProductList.ExecuteAsync();
     //result.EnsureNoErrors();
 
-    foreach (var item in result.Data!.ProductList)
+    foreach (var item in result.Data!.ProductList)  
       message += item.Name + "; ";
 
     var result2 = await glc.GetBookList.ExecuteAsync();

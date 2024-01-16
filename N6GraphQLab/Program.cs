@@ -13,7 +13,8 @@ builder.Services
     .AddType<BookQuery>()
     .AddMutationType<Mutation>()
     .AddSubscriptionType<Subscription>() // for GrqphQL subscriptions.
-    .AddInMemorySubscriptions();
+    .AddInMemorySubscriptions()
+    .AddFiltering(); // enable filter
 
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
