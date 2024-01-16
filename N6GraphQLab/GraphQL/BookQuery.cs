@@ -26,6 +26,9 @@ public class BookQuery
   [UseSorting]
   public IQueryable<Book> GetBookList() => _books.AsQueryable();
 
+  [UsePaging]
+  public IQueryable<Book> GetBooksPage() => _books.AsQueryable();
+
   [UseFiltering]
   public IQueryable<Book> GetBookListX(string title) => _books.Where(c => c.Title.Contains(title)).AsQueryable();
 
