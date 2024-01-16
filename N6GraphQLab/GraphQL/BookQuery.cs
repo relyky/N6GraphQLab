@@ -17,8 +17,14 @@ public class BookQuery
     new("Python範例學習書|輕鬆、有趣學習Python程式設計", new Author("吳進北")),
   };
 
+  /// <summary>
+  /// Note: If you use more than one middleware, keep in mind that ORDER MATTERS. The correct order is UsePaging > UseProjections > UseFiltering > UseSorting
+  /// </summary>
+  //[UsePaging]
+  //[UseProjection]
   [UseFiltering]
-  public Book[] GetBookList() => _books;
+  [UseSorting]
+  public IQueryable<Book> GetBookList() => _books.AsQueryable();
 
   [UseFiltering]
   public IQueryable<Book> GetBookListX(string title) => _books.Where(c => c.Title.Contains(title)).AsQueryable();

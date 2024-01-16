@@ -14,7 +14,8 @@ builder.Services
     .AddMutationType<Mutation>()
     .AddSubscriptionType<Subscription>() // for GrqphQL subscriptions.
     .AddInMemorySubscriptions()
-    .AddFiltering(); // enable filter
+    .AddFiltering() // enable filter
+    .AddSorting(); // enable sorting
 
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
