@@ -11,6 +11,8 @@ builder.Services
     .AddQueryType<Query>()
     .AddType<ProductQuery>()
     .AddType<BookQuery>()
+    .AddType<TextContent>()  // for testing unions
+    .AddType<ImageContent>() // for testing unions
     .AddMutationType<Mutation>()
     .AddSubscriptionType<Subscription>() // for GrqphQL subscriptions.
     .AddInMemorySubscriptions()
